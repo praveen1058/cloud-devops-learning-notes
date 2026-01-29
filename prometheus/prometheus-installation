@@ -1,12 +1,24 @@
 ## install Prometheus on Ubuntu 22.04
+
+#Step 1 - Update System Packages
 sudo apt update
+
+#Step 2 - Create a System User for Prometheus
 sudo groupadd --system prometheus
 sudo useradd -s /sbin/nologin --system -g prometheus prometheus
+
+#Step 3 - Create Directories for Prometheus
 sudo mkdir /etc/prometheus
 sudo mkdir /var/lib/prometheus
+
+#Step 4 - Download Prometheus and Extract Files
 wget https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz
 tar vxf prometheus*.tar.gz
 cd prometheus*/
+
+
+##Configuring Prometheus on Ubuntu 22.04
+Step 5 - Move the Binary Files & Set Owner
 sudo mv prometheus /usr/local/bin
 sudo mv promtool /usr/local/bin
 sudo chown prometheus:prometheus /usr/local/bin/prometheus
@@ -20,7 +32,12 @@ sudo chown -R prometheus:prometheus /etc/prometheus/consoles
 sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
 sudo chown -R prometheus:prometheus /var/lib/prometheus
 sudo nano /etc/prometheus/prometheus.yml
+
+#Step 6 - Create Prometheus Systemd Service
 sudo nano /etc/systemd/system/prometheus.service
+
+
+ ##Start Prometheus Service
 sudo systemctl daemon-reload
 sudo systemctl enable prometheus
 sudo systemctl start prometheus
