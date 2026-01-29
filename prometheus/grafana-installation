@@ -31,3 +31,38 @@ grafana-server -v
 
 sudo systemctl start grafana-server
 #Enable the Grafana service to start on boot:
+sudo systemctl enable grafana-server
+sudo systemctl status grafana-server
+sudo service grafana-server start
+sudo service grafana-server restart
+sudo ufw allow 3000/tcp
+
+##Set up Grafana
+#Access the Grafana web UI by visiting http://localhost:3000 in your web browser.
+# Log in to Grafana with the default credentials (username: admin, password: admin).
+
+
+##Add Prometheus as a Data Source in Grafana
+#Open Grafana in browser
+http://<GRAFANA_IP>:3000
+Left menu → ⚙ Settings → Data Sources
+Click Add data source
+Select Prometheus
+Configure:
+Name: Prometheus
+URL:
+Same VM → http://localhost:9090
+Different VM → http://<IP>:9090
+Leave everything else default
+Click Save & Test
+✅ You should see “Data source is working”
+
+Import a Ready-Made Dashboard (fastest win)
+Example: Node Exporter dashboard
+Left menu → + → Import
+Enter Dashboard ID:
+1860
+Select your Prometheus data source
+Click Import
+🎉 Boom — CPU, memory, disk, network graphs.
+
